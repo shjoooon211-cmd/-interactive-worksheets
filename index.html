@@ -3,211 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الأوراق التفاعلية - شجون الظاهري</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Cairo', 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            color: #333;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            color: white;
-            margin-bottom: 50px;
-            padding: 30px 0;
-        }
-
-        header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-
-        .worksheets-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-
-        .worksheet-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .worksheet-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        .worksheet-card h2 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.8em;
-        }
-
-        .worksheet-card .grade {
-            color: #764ba2;
-            font-weight: bold;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
-
-        .worksheet-card .strategy {
-            background: #f0f0f0;
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            color: #555;
-            font-size: 0.95em;
-        }
-
-        .worksheet-card .description {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            font-size: 0.95em;
-        }
-
-        .btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 1em;
-        }
-
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        footer {
-            text-align: center;
-            color: white;
-            padding: 30px 0;
-            border-top: 1px solid rgba(255,255,255,0.2);
-            margin-top: 50px;
-        }
-
-        footer p {
-            margin-bottom: 10px;
-        }
-
-        .teacher-info {
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 10px;
-            color: white;
-            margin-bottom: 20px;
-        }
-
-        .teacher-info h3 {
-            margin-bottom: 10px;
-        }
-
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2em;
-            }
-
-            .worksheets-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <title>أزخرف بالدائرة والمثلث</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>🎨 الأوراق التفاعلية 🎨</h1>
-            <p>منصة تعليمية تفاعلية لتنمية مهارات التفكير العليا</p>
+        <!-- رأس الصفحة -->
+        <header class="header">
+            <h1 class="title">🎨 أزخرف بالدائرة والمثلث 🎨</h1>
+            <p class="subtitle">صنّفي الأشكال في المجموعات الصحيحة</p>
         </header>
 
-        <div class="teacher-info">
-            <h3>👩‍🏫 المعلمة: شجون الظاهري</h3>
-            <p>مرحباً بك في منصة الأوراق التفاعلية. اختري الورقة التي تريدينها وابدئي الآن!</p>
+        <!-- الجزء الأول: منطقة التصنيف -->
+        <section class="classification-section">
+            <div class="instruction">
+                <p>👇 اسحبي الأشكال إلى المجموعة الصحيحة 👇</p>
+            </div>
+
+            <div class="classification-container">
+                <!-- مجموعة الدوائر -->
+                <div class="category-box circles-box">
+                    <h2 class="category-title">🔵 الدوائر 🔵</h2>
+                    <div class="drop-zone" id="circlesZone">
+                        <div class="shape circle-shape" draggable="true" data-shape="circle">🔵</div>
+                        <div class="shape circle-shape" draggable="true" data-shape="circle">🔴</div>
+                        <div class="shape circle-shape" draggable="true" data-shape="circle">🟡</div>
+                    </div>
+                </div>
+
+                <!-- مجموعة المثلثات -->
+                <div class="category-box triangles-box">
+                    <h2 class="category-title">🔺 المثلثات 🔺</h2>
+                    <div class="drop-zone" id="trianglesZone">
+                        <div class="shape triangle-shape" draggable="true" data-shape="triangle">🔺</div>
+                        <div class="shape triangle-shape" draggable="true" data-shape="triangle">🔻</div>
+                        <div class="shape triangle-shape" draggable="true" data-shape="triangle">📍</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- منطقة الأشكال المختلطة -->
+            <div class="mixed-shapes-section">
+                <h3 class="mixed-title">صنّفي هذه الأشكال:</h3>
+                <div class="mixed-shapes-container" id="mixedShapesContainer">
+                    <div class="shape circle-shape" draggable="true" data-shape="circle">🟢</div>
+                    <div class="shape triangle-shape" draggable="true" data-shape="triangle">🔺</div>
+                    <div class="shape circle-shape" draggable="true" data-shape="circle">🔵</div>
+                    <div class="shape triangle-shape" draggable="true" data-shape="triangle">🔻</div>
+                    <div class="shape circle-shape" draggable="true" data-shape="circle">🟠</div>
+                    <div class="shape triangle-shape" draggable="true" data-shape="triangle">📍</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- الجزء الثاني: منطقة الزخرفة -->
+        <section class="decoration-section">
+            <h2 class="decoration-title">✨ زخّرفي الإطار بالأشكال ✨</h2>
+            <div class="decoration-frame">
+                <div class="frame-content">
+                    <p class="frame-text">أحسنتِ! 🌟</p>
+                    <p class="frame-subtext">عملك رائع جداً!</p>
+                </div>
+                <div class="decoration-tools">
+                    <button class="deco-btn circle-deco" onclick="addDecoration('circle')">🔵 أضيفي دائرة</button>
+                    <button class="deco-btn triangle-deco" onclick="addDecoration('triangle')">🔺 أضيفي مثلث</button>
+                    <button class="deco-btn clear-deco" onclick="clearDecorations()">🗑️ امسحي</button>
+                </div>
+                <div class="decoration-canvas" id="decorationCanvas"></div>
+            </div>
+        </section>
+
+        <!-- زر إعادة تعيين -->
+        <div class="action-buttons">
+            <button class="reset-btn" onclick="resetAll()">🔄 ابدئي من جديد</button>
+            <button class="print-btn" onclick="window.print()">🖨️ اطبعي الورقة</button>
         </div>
-
-        <div class="worksheets-grid">
-            <!-- الورقة الأولى -->
-            <div class="worksheet-card">
-                <h2>🔵 أزخرف بالدائرة والمثلث</h2>
-                <div class="grade">📚 الصف الأول الابتدائي</div>
-                <div class="strategy">استراتيجية: التصنيف</div>
-                <div class="description">
-                    ورقة عمل تفاعلية لتصنيف الأشكال الهندسية (دوائر ومثلثات) مع منطقة زخرفة جميلة.
-                </div>
-                <a href="worksheet1/index.html" class="btn">افتحي الورقة</a>
-            </div>
-
-            <!-- الورقة الثانية -->
-            <div class="worksheet-card">
-                <h2>🎨 فكر – ارسم – شارك</h2>
-                <div class="grade">📚 الصف السادس الابتدائي</div>
-                <div class="strategy">استراتيجية: التفكير الناقد</div>
-                <div class="description">
-                    درس التشعب الزخرفي على الأسطح المتنوعة مع ثلاث مراحل تفاعلية للتعلم.
-                </div>
-                <a href="worksheet2/index.html" class="btn">افتحي الورقة</a>
-            </div>
-
-            <!-- الورقة الثالثة -->
-            <div class="worksheet-card">
-                <h2>🔺 أطبع بوجداني الهندسية</h2>
-                <div class="grade">📚 الصف الثالث الابتدائي</div>
-                <div class="strategy">استراتيجية: الإبداع والابتكار</div>
-                <div class="description">
-                    ورقة عمل تفاعلية لتصميم أشكال هندسية بألوان مختلفة مع تقييم ذاتي.
-                </div>
-                <a href="worksheet3/index.html" class="btn">افتحي الورقة</a>
-            </div>
-
-            <!-- الورقة الرابعة -->
-            <div class="worksheet-card">
-                <h2>🧵 ألعابي المنسوجة</h2>
-                <div class="grade">📚 الصف الثاني الابتدائي</div>
-                <div class="strategy">استراتيجية: التحليل والتركيب والتقييم</div>
-                <div class="description">
-                    ورقة عمل تفاعلية لتعلم النسج برسم خيوط السدى واللحمة مع تقييم ذاتي.
-                </div>
-                <a href="worksheet4/index.html" class="btn">افتحي الورقة</a>
-            </div>
-        </div>
-
-        <footer>
-            <p>© 2025 الأوراق التفاعلية - جميع الحقوق محفوظة</p>
-            <p>تم التطوير بواسطة Manus AI</p>
-        </footer>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
