@@ -1,227 +1,271 @@
-// متغيرات عامة
-let draggedElement = null;
-let draggedFrom = null;
+// متغيرات الرسم
+let canvas = document.getElementById('canvas');
+let ctx = canvas.getContext('2d');
+let isDrawing = false;
+let currentTool = 'pencil';
+let currentColor = '#8B4513';
 
-// تهيئة الأحداث عند تحميل الصفحة
+// تهيئة Canvas
+function initializeCanvas() {
+    // ضبط حجم الـ Canvas
+    const container = canvas.parentElement;
+    canvas.width = container.offsetWidth - 4;
+    canvas.height = 300;
+    
+    // ملء الخلفية بلون أبيض
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+// تهيئة عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', function() {
-    initializeDragAndDrop();
-    setupDropZones();
-    setupMixedShapes();
+    initializeCanvas();
+    setupCanvasEvents();
+    setDateToday();
 });
 
-// تهيئة السحب والإفلات
-function initializeDragAndDrop() {
-    const shapes = document.querySelectorAll('.shape');
+// ضبط التاريخ إلى اليوم
+function setDateToday() {
+    const dateInput = document.querySelector('input[type="date"]');
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
+}
+
+// إعداد أحداث الـ Canvas
+function setupCanvasEvents() {
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseout', stopDrawing);
     
-    shapes.forEach(shape => {
-        shape.addEventListener('dragstart', handleDragStart);
-        shape.addEventListener('dragend', handleDragEnd);
-    });
+    // دعم اللمس على الأجهزة المحمولة
+    canvas.addEventListener('touchstart', handleTouch);
+    canvas.addEventListener('touchmove', handleTouch);
+    canvas.addEventListener('touchend', stopDrawing);
 }
 
-// معالج بداية السحب
-function handleDragStart(e) {
-    draggedElement = this;
-    draggedFrom = this.parentElement;
-    this.style.opacity = '0.5';
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/html', this.innerHTML);
-}
-
-// معالج نهاية السحب
-function handleDragEnd(e) {
-    this.style.opacity = '1';
-    document.querySelectorAll('.drop-zone').forEach(zone => {
-        zone.classList.remove('drag-over');
-    });
-}
-
-// إعداد مناطق الإفلات
-function setupDropZones() {
-    const dropZones = document.querySelectorAll('.drop-zone');
+// معالج بداية الرسم
+function startDrawing(e) {
+    isDrawing = true;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
     
-    dropZones.forEach(zone => {
-        zone.addEventListener('dragover', handleDragOver);
-        zone.addEventListener('dragleave', handleDragLeave);
-        zone.addEventListener('drop', handleDrop);
-    });
+    ctx.beginPath();
+    ctx.moveTo(x, y);
 }
 
-// معالج السحب فوق المنطقة
-function handleDragOver(e) {
+// معالج الرسم
+function draw(e) {
+    if (!isDrawing) return;
+    
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    if (currentTool === 'pencil') {
+        ctx.strokeStyle = currentColor;
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.lineTo(x, y);
+        ctx.stroke();
+    } else if (currentTool === 'eraser') {
+        ctx.clearRect(x - 10, y - 10, 20, 20);
+    }
+}
+
+// معالج نهاية الرسم
+function stopDrawing() {
+    isDrawing = false;
+    ctx.closePath();
+}
+
+// معالج اللمس
+function handleTouch(e) {
     e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
-    this.classList.add('drag-over');
-}
-
-// معالج ترك السحب من المنطقة
-function handleDragLeave(e) {
-    if (e.target === this) {
-        this.classList.remove('drag-over');
-    }
-}
-
-// معالج الإفلات
-function handleDrop(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    this.classList.remove('drag-over');
-    
-    if (!draggedElement) return;
-    
-    const shapeType = draggedElement.getAttribute('data-shape');
-    const zoneId = this.getAttribute('id');
-    
-    // التحقق من التصنيف الصحيح
-    const isCorrect = 
-        (shapeType === 'circle' && zoneId === 'circlesZone') ||
-        (shapeType === 'triangle' && zoneId === 'trianglesZone');
-    
-    if (isCorrect) {
-        // نقل الشكل إلى المنطقة الصحيحة
-        this.appendChild(draggedElement);
-        showSuccessAnimation(draggedElement);
-        checkCompletion();
-    } else {
-        // تأثير الخطأ
-        showErrorAnimation(draggedElement);
-    }
-    
-    draggedElement = null;
-    draggedFrom = null;
-}
-
-// تأثير النجاح
-function showSuccessAnimation(element) {
-    element.style.animation = 'none';
-    setTimeout(() => {
-        element.style.animation = 'popIn 0.3s ease';
-    }, 10);
-    
-    // صوت النجاح (محاكاة)
-    playSuccessSound();
-}
-
-// تأثير الخطأ
-function showErrorAnimation(element) {
-    element.style.animation = 'shake 0.5s ease';
-    setTimeout(() => {
-        element.style.animation = 'none';
-    }, 500);
-}
-
-// تأثير الاهتزاز
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        25% { transform: translateX(-10px); }
-        75% { transform: translateX(10px); }
-    }
-`;
-document.head.appendChild(style);
-
-// صوت النجاح (محاكاة)
-function playSuccessSound() {
-    // يمكن إضافة صوت حقيقي هنا
-    console.log('✓ صحيح!');
-}
-
-// إعداد الأشكال المختلطة
-function setupMixedShapes() {
-    const mixedShapes = document.querySelectorAll('.mixed-shapes-container .shape');
-    mixedShapes.forEach(shape => {
-        shape.addEventListener('dragstart', handleDragStart);
-        shape.addEventListener('dragend', handleDragEnd);
+    const touch = e.touches[0];
+    const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 'mousemove', {
+        clientX: touch.clientX,
+        clientY: touch.clientY
     });
+    canvas.dispatchEvent(mouseEvent);
 }
 
-// التحقق من اكتمال التصنيف
-function checkCompletion() {
-    const circlesZone = document.getElementById('circlesZone');
-    const trianglesZone = document.getElementById('trianglesZone');
-    const mixedContainer = document.querySelector('.mixed-shapes-container');
+// تفعيل أداة القلم
+function activatePencil() {
+    currentTool = 'pencil';
+    canvas.style.cursor = 'crosshair';
+    updateToolButtons('pencil');
+}
+
+// تفعيل أداة الممحاة
+function activateEraser() {
+    currentTool = 'eraser';
+    canvas.style.cursor = 'cell';
+    updateToolButtons('eraser');
+}
+
+// فتح منتقي الألوان
+function openColorPicker() {
+    document.getElementById('colorPicker').click();
+}
+
+// تحديث لون الرسم
+document.addEventListener('DOMContentLoaded', function() {
+    const colorPicker = document.getElementById('colorPicker');
+    if (colorPicker) {
+        colorPicker.addEventListener('change', function(e) {
+            currentColor = e.target.value;
+            currentTool = 'pencil';
+            updateToolButtons('pencil');
+        });
+    }
+});
+
+// تحديث حالة أزرار الأدوات
+function updateToolButtons(activeTool) {
+    document.querySelectorAll('.tool-btn').forEach(btn => {
+        btn.style.opacity = '1';
+        btn.style.transform = 'scale(1)';
+    });
     
-    // التحقق من وجود أشكال في المناطق الصحيحة
-    const circlesCount = circlesZone.querySelectorAll('.shape').length;
-    const trianglesCount = trianglesZone.querySelectorAll('.shape').length;
-    const mixedCount = mixedContainer.querySelectorAll('.shape').length;
-    
-    // إذا تم تصنيف جميع الأشكال
-    if (mixedCount === 0 && (circlesCount > 0 || trianglesCount > 0)) {
-        showCompletionMessage();
+    if (activeTool === 'pencil') {
+        document.querySelector('.pencil-btn').style.opacity = '0.7';
+        document.querySelector('.pencil-btn').style.transform = 'scale(1.05)';
+    } else if (activeTool === 'eraser') {
+        document.querySelector('.eraser-btn').style.opacity = '0.7';
+        document.querySelector('.eraser-btn').style.transform = 'scale(1.05)';
     }
 }
 
-// عرض رسالة الاكتمال
-function showCompletionMessage() {
-    // يمكن إضافة رسالة احتفالية هنا
-    console.log('🎉 أحسنتِ! تم التصنيف بنجاح!');
-}
-
-// إضافة عنصر زخرفة
-function addDecoration(type) {
-    const canvas = document.getElementById('decorationCanvas');
-    const decorationItem = document.createElement('div');
-    decorationItem.className = 'decoration-item';
-    
-    if (type === 'circle') {
-        const circles = ['🔵', '🔴', '🟡', '🟢', '🟠'];
-        decorationItem.textContent = circles[Math.floor(Math.random() * circles.length)];
-    } else if (type === 'triangle') {
-        const triangles = ['🔺', '🔻', '📍'];
-        decorationItem.textContent = triangles[Math.floor(Math.random() * triangles.length)];
+// مسح الـ Canvas
+function clearCanvas() {
+    if (confirm('هل تريدين مسح الرسم بالكامل؟')) {
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
-    
-    canvas.appendChild(decorationItem);
 }
 
-// مسح الزخارف
-function clearDecorations() {
-    const canvas = document.getElementById('decorationCanvas');
-    canvas.innerHTML = '';
+// رفع صورة
+function uploadImage(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+            // مسح الـ Canvas أولاً
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // حساب النسبة للحفاظ على الصورة
+            const scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+            const x = (canvas.width - img.width * scale) / 2;
+            const y = (canvas.height - img.height * scale) / 2;
+            
+            // رسم الصورة
+            ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+// حفظ العمل
+function saveActivity() {
+    const studentName = document.querySelector('input[type="text"]').value || 'الطالبة';
+    const timestamp = new Date().toLocaleString('ar-SA');
+    
+    // جمع البيانات
+    const activityData = {
+        studentName: studentName,
+        date: document.querySelector('input[type="date"]').value,
+        thoughts: document.querySelector('.thinking-area textarea').value,
+        surface: document.querySelector('.reflection-box input[type="text"]').value,
+        reason: document.querySelectorAll('.reflection-box textarea')[0].value,
+        impact: document.querySelectorAll('.reflection-box textarea')[1].value,
+        learning: document.querySelectorAll('.reflection-box textarea')[2].value,
+        rating: document.querySelector('input[name="rating"]:checked')?.value || 'لم يتم التقييم',
+        timestamp: timestamp
+    };
+    
+    // حفظ في Local Storage
+    localStorage.setItem('artActivity_' + studentName + '_' + Date.now(), JSON.stringify(activityData));
+    
+    // رسالة تأكيد
+    alert('✅ تم حفظ عملك بنجاح!\n\nاسم الطالبة: ' + studentName + '\nالوقت: ' + timestamp);
+}
+
+// طباعة الورقة
+function printActivity() {
+    window.print();
 }
 
 // إعادة تعيين الكل
 function resetAll() {
-    // إعادة تعيين التصنيف
-    const allShapes = document.querySelectorAll('.shape');
-    const mixedContainer = document.querySelector('.mixed-shapes-container');
-    
-    allShapes.forEach(shape => {
-        if (!shape.closest('.mixed-shapes-container')) {
-            mixedContainer.appendChild(shape);
-        }
-    });
-    
-    // إعادة تهيئة الأحداث
-    initializeDragAndDrop();
-    setupMixedShapes();
-    
-    // مسح الزخارف
-    clearDecorations();
-    
-    // تمرير التركيز إلى الأعلى
-    window.scrollTo(0, 0);
+    if (confirm('هل تريدين إعادة تعيين جميع البيانات؟ (هذا لا يمكن التراجع عنه)')) {
+        // مسح النصوص
+        document.querySelectorAll('input[type="text"]').forEach(input => {
+            if (input.placeholder !== 'أكتبي اسمك هنا') {
+                input.value = '';
+            }
+        });
+        
+        document.querySelectorAll('textarea').forEach(textarea => {
+            textarea.value = '';
+        });
+        
+        // مسح الـ Canvas
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // إعادة تعيين التاريخ
+        setDateToday();
+        
+        // إعادة تعيين التقييم
+        document.querySelectorAll('input[name="rating"]').forEach(radio => {
+            radio.checked = false;
+        });
+        
+        // تمرير التركيز إلى الأعلى
+        window.scrollTo(0, 0);
+        
+        alert('✅ تم إعادة تعيين الورقة بنجاح!');
+    }
 }
 
-// إضافة تأثيرات إضافية عند التفاعل
-document.addEventListener('dragover', (e) => {
-    e.preventDefault();
+// إضافة تأثيرات عند التركيز على الحقول
+document.addEventListener('DOMContentLoaded', function() {
+    const inputs = document.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.style.boxShadow = '0 0 15px rgba(205, 133, 63, 0.3)';
+        });
+        
+        input.addEventListener('blur', function() {
+            this.style.boxShadow = 'none';
+        });
+    });
 });
 
-// تحسين التجربة على الأجهزة اللمسية
-if ('ontouchstart' in window) {
-    document.addEventListener('touchstart', function(e) {
-        if (e.target.classList.contains('shape')) {
-            e.target.style.opacity = '0.7';
-        }
-    });
-    
-    document.addEventListener('touchend', function(e) {
-        if (e.target.classList.contains('shape')) {
-            e.target.style.opacity = '1';
-        }
-    });
-}
+// حفظ تلقائي كل 5 دقائق
+setInterval(function() {
+    const studentName = document.querySelector('input[type="text"]').value;
+    if (studentName) {
+        const autoSaveData = {
+            studentName: studentName,
+            autoSaved: true,
+            timestamp: new Date().toLocaleString('ar-SA')
+        };
+        localStorage.setItem('autoSave_' + studentName, JSON.stringify(autoSaveData));
+    }
+}, 300000); // كل 5 دقائق
+
+// معالج تغيير حجم النافذة
+window.addEventListener('resize', function() {
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    initializeCanvas();
+    ctx.putImageData(imageData, 0, 0);
+});

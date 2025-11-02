@@ -3,81 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أزخرف بالدائرة والمثلث</title>
+    <title>فكر – ارسم – شارك</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <!-- رأس الصفحة -->
         <header class="header">
-            <h1 class="title">🎨 أزخرف بالدائرة والمثلث 🎨</h1>
-            <p class="subtitle">صنّفي الأشكال في المجموعات الصحيحة</p>
+            <h1 class="main-title">🎨 فكر – ارسم – شارك 🎨</h1>
+            <p class="subtitle">الزخرفة على أسطح متنوعة</p>
+            <p class="class-info">الصف السادس الابتدائي</p>
         </header>
 
-        <!-- الجزء الأول: منطقة التصنيف -->
-        <section class="classification-section">
-            <div class="instruction">
-                <p>👇 اسحبي الأشكال إلى المجموعة الصحيحة 👇</p>
+        <!-- معلومات الطالبة -->
+        <div class="student-info">
+            <div class="info-field">
+                <label>اسم الطالبة:</label>
+                <input type="text" placeholder="أكتبي اسمك هنا" class="input-field">
             </div>
-
-            <div class="classification-container">
-                <!-- مجموعة الدوائر -->
-                <div class="category-box circles-box">
-                    <h2 class="category-title">🔵 الدوائر 🔵</h2>
-                    <div class="drop-zone" id="circlesZone">
-                        <div class="shape circle-shape" draggable="true" data-shape="circle">🔵</div>
-                        <div class="shape circle-shape" draggable="true" data-shape="circle">🔴</div>
-                        <div class="shape circle-shape" draggable="true" data-shape="circle">🟡</div>
-                    </div>
-                </div>
-
-                <!-- مجموعة المثلثات -->
-                <div class="category-box triangles-box">
-                    <h2 class="category-title">🔺 المثلثات 🔺</h2>
-                    <div class="drop-zone" id="trianglesZone">
-                        <div class="shape triangle-shape" draggable="true" data-shape="triangle">🔺</div>
-                        <div class="shape triangle-shape" draggable="true" data-shape="triangle">🔻</div>
-                        <div class="shape triangle-shape" draggable="true" data-shape="triangle">📍</div>
-                    </div>
-                </div>
+            <div class="info-field">
+                <label>التاريخ:</label>
+                <input type="date" class="input-field">
             </div>
-
-            <!-- منطقة الأشكال المختلطة -->
-            <div class="mixed-shapes-section">
-                <h3 class="mixed-title">صنّفي هذه الأشكال:</h3>
-                <div class="mixed-shapes-container" id="mixedShapesContainer">
-                    <div class="shape circle-shape" draggable="true" data-shape="circle">🟢</div>
-                    <div class="shape triangle-shape" draggable="true" data-shape="triangle">🔺</div>
-                    <div class="shape circle-shape" draggable="true" data-shape="circle">🔵</div>
-                    <div class="shape triangle-shape" draggable="true" data-shape="triangle">🔻</div>
-                    <div class="shape circle-shape" draggable="true" data-shape="circle">🟠</div>
-                    <div class="shape triangle-shape" draggable="true" data-shape="triangle">📍</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- الجزء الثاني: منطقة الزخرفة -->
-        <section class="decoration-section">
-            <h2 class="decoration-title">✨ زخّرفي الإطار بالأشكال ✨</h2>
-            <div class="decoration-frame">
-                <div class="frame-content">
-                    <p class="frame-text">أحسنتِ! 🌟</p>
-                    <p class="frame-subtext">عملك رائع جداً!</p>
-                </div>
-                <div class="decoration-tools">
-                    <button class="deco-btn circle-deco" onclick="addDecoration('circle')">🔵 أضيفي دائرة</button>
-                    <button class="deco-btn triangle-deco" onclick="addDecoration('triangle')">🔺 أضيفي مثلث</button>
-                    <button class="deco-btn clear-deco" onclick="clearDecorations()">🗑️ امسحي</button>
-                </div>
-                <div class="decoration-canvas" id="decorationCanvas"></div>
-            </div>
-        </section>
-
-        <!-- زر إعادة تعيين -->
-        <div class="action-buttons">
-            <button class="reset-btn" onclick="resetAll()">🔄 ابدئي من جديد</button>
-            <button class="print-btn" onclick="window.print()">🖨️ اطبعي الورقة</button>
         </div>
+
+        <!-- المراحل الثلاث -->
+        <div class="phases-container">
+            <!-- المرحلة الأولى: فكر -->
+            <div class="phase-box think-phase">
+                <div class="phase-header think-header">
+                    <span class="phase-icon">💭</span>
+                    <h2 class="phase-title">المرحلة الأولى: فكّري</h2>
+                </div>
+                
+                <div class="phase-content">
+                    <div class="question-box">
+                        <p class="question">❓ على أي أسطح يمكننا أن نرسم الزخارف؟</p>
+                    </div>
+
+                    <div class="thinking-area">
+                        <p class="area-label">📝 اكتبي أفكارك:</p>
+                        <textarea class="text-input" placeholder="أكتبي الأسطح التي تخطر ببالك...&#10;مثل: الجدران، الأقمشة، الخشب، الفخار، الورق..."></textarea>
+                    </div>
+
+                    <div class="examples-box">
+                        <p class="examples-title">💡 أمثلة من حولنا:</p>
+                        <div class="examples-list">
+                            <span class="example-tag">🧱 الجدران</span>
+                            <span class="example-tag">🎨 الأقمشة</span>
+                            <span class="example-tag">🪵 الخشب</span>
+                            <span class="example-tag">🏺 الفخار</span>
+                            <span class="example-tag">🪟 الزجاج</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- المرحلة الثانية: ارسم -->
+            <div class="phase-box draw-phase">
+                <div class="phase-header draw-header">
+                    <span class="phase-icon">🎨</span>
+                    <h2 class="phase-title">المرحلة الثانية: ارسمي</h2>
+                </div>
+
+                <div class="phase-content">
+                    <p class="draw-instruction">🖌️ ارسمي أو الصقي صورة زخرفة من اختيارك:</p>
+                    
+                    <div class="drawing-canvas" id="drawingCanvas">
+                        <canvas id="canvas" width="400" height="300"></canvas>
+                        <div class="canvas-placeholder">
+                            <p>🖼️ منطقة الرسم</p>
+                            <p class="placeholder-text">يمكنك الرسم هنا أو لصق صورة</p>
+                        </div>
+                    </div>
+
+                    <div class="drawing-tools">
+                        <button class="tool-btn pencil-btn" onclick="activatePencil()" title="قلم الرسم">✏️ قلم</button>
+                        <button class="tool-btn eraser-btn" onclick="activateEraser()" title="ممحاة">🧹 ممحاة</button>
+                        <button class="tool-btn color-btn" onclick="openColorPicker()" title="اختاري اللون">🎨 لون</button>
+                        <input type="color" id="colorPicker" class="color-picker" value="#8B4513">
+                        <button class="tool-btn clear-btn" onclick="clearCanvas()" title="امسحي الكل">🗑️ امسحي</button>
+                    </div>
+
+                    <div class="upload-section">
+                        <p class="upload-label">أو الصقي صورة:</p>
+                        <input type="file" id="imageUpload" class="file-input" accept="image/*" onchange="uploadImage(event)">
+                        <label for="imageUpload" class="upload-btn">📸 اختاري صورة</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- المرحلة الثالثة: شارك -->
+            <div class="phase-box share-phase">
+                <div class="phase-header share-header">
+                    <span class="phase-icon">💬</span>
+                    <h2 class="phase-title">المرحلة الثالثة: شاركي</h2>
+                </div>
+
+                <div class="phase-content">
+                    <div class="reflection-box">
+                        <p class="reflection-title">🤔 تأملي وشاركي تجربتك:</p>
+                        
+                        <div class="question-item">
+                            <label class="question-label">❓ ما السطح الذي اخترتِ الرسم عليه؟</label>
+                            <input type="text" class="text-input-short" placeholder="أكتبي السطح الذي اخترتِه...">
+                        </div>
+
+                        <div class="question-item">
+                            <label class="question-label">❓ لماذا اخترتِ هذا السطح بالذات؟</label>
+                            <textarea class="text-input" placeholder="أكتبي السبب...&#10;مثل: اخترته لأنه ناعم، أو لأنه يعكس الضوء بشكل جميل..."></textarea>
+                        </div>
+
+                        <div class="question-item">
+                            <label class="question-label">❓ كيف أثر السطح على شكل الزخرفة؟</label>
+                            <textarea class="text-input" placeholder="اشرحي كيف تأثر تصميمك بخصائص السطح..."></textarea>
+                        </div>
+
+                        <div class="question-item">
+                            <label class="question-label">❓ ما الذي تعلمتِه من هذا النشاط؟</label>
+                            <textarea class="text-input" placeholder="شاركي ملاحظاتك وتعليقاتك..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="feedback-section">
+                        <p class="feedback-title">⭐ تقييم ذاتي:</p>
+                        <div class="rating-options">
+                            <label class="rating-label">
+                                <input type="radio" name="rating" value="ممتاز">
+                                <span class="rating-text">⭐⭐⭐ ممتاز</span>
+                            </label>
+                            <label class="rating-label">
+                                <input type="radio" name="rating" value="جيد جداً">
+                                <span class="rating-text">⭐⭐ جيد جداً</span>
+                            </label>
+                            <label class="rating-label">
+                                <input type="radio" name="rating" value="جيد">
+                                <span class="rating-text">⭐ جيد</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- أزرار الإجراءات -->
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="saveActivity()">💾 احفظي عملك</button>
+            <button class="btn btn-secondary" onclick="printActivity()">🖨️ اطبعي الورقة</button>
+            <button class="btn btn-reset" onclick="resetAll()">🔄 ابدئي من جديد</button>
+        </div>
+
+
     </div>
 
     <script src="script.js"></script>
