@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأوراق التفاعلية - شجون الظاهري</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            padding: 30px 0;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .worksheets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .worksheet-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .worksheet-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .worksheet-card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .worksheet-card .grade {
+            color: #764ba2;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .worksheet-card .strategy {
+            background: #f0f0f0;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        .worksheet-card .description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            margin-top: 50px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        .teacher-info {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .teacher-info h3 {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .worksheets-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 الأوراق التفاعلية 🎨</h1>
+            <p>منصة تعليمية تفاعلية لتنمية مهارات التفكير العليا</p>
+        </header>
+
+        <div class="teacher-info">
+            <h3>👩‍🏫 المعلمة: شجون الظاهري</h3>
+            <p>مرحباً بك في منصة الأوراق التفاعلية. اختري الورقة التي تريدينها وابدئي الآن!</p>
+        </div>
+
+        <div class="worksheets-grid">
+            <!-- الورقة الأولى -->
+            <div class="worksheet-card">
+                <h2>🔵 أزخرف بالدائرة والمثلث</h2>
+                <div class="grade">📚 الصف الأول الابتدائي</div>
+                <div class="strategy">استراتيجية: التصنيف</div>
+                <div class="description">
+                    ورقة عمل تفاعلية لتصنيف الأشكال الهندسية (دوائر ومثلثات) مع منطقة زخرفة جميلة.
+                </div>
+                <a href="worksheet1/index.html" class="btn">افتحي الورقة</a>
+            </div>
+
+            <!-- الورقة الثانية -->
+            <div class="worksheet-card">
+                <h2>🎨 فكر – ارسم – شارك</h2>
+                <div class="grade">📚 الصف السادس الابتدائي</div>
+                <div class="strategy">استراتيجية: التفكير الناقد</div>
+                <div class="description">
+                    درس التشعب الزخرفي على الأسطح المتنوعة مع ثلاث مراحل تفاعلية للتعلم.
+                </div>
+                <a href="worksheet2/index.html" class="btn">افتحي الورقة</a>
+            </div>
+
+            <!-- الورقة الثالثة -->
+            <div class="worksheet-card">
+                <h2>🔺 أطبع بوجداني الهندسية</h2>
+                <div class="grade">📚 الصف الثالث الابتدائي</div>
+                <div class="strategy">استراتيجية: الإبداع والابتكار</div>
+                <div class="description">
+                    ورقة عمل تفاعلية لتصميم أشكال هندسية بألوان مختلفة مع تقييم ذاتي.
+                </div>
+                <a href="worksheet3/index.html" class="btn">افتحي الورقة</a>
+            </div>
+
+            <!-- الورقة الرابعة -->
+            <div class="worksheet-card">
+                <h2>🧵 ألعابي المنسوجة</h2>
+                <div class="grade">📚 الصف الثاني الابتدائي</div>
+                <div class="strategy">استراتيجية: التحليل والتركيب والتقييم</div>
+                <div class="description">
+                    ورقة عمل تفاعلية لتعلم النسج برسم خيوط السدى واللحمة مع تقييم ذاتي.
+                </div>
+                <a href="worksheet4/index.html" class="btn">افتحي الورقة</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 الأوراق التفاعلية - جميع الحقوق محفوظة</p>
+            <p>تم التطوير بواسطة Manus AI</p>
+        </footer>
+    </div>
+</body>
+</html>
